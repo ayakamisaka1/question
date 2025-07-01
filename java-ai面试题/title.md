@@ -6,8 +6,6 @@ ai微调  提示词优化   消息中间件rocketmq  rabbitmq  kafka   高速搜
 
 
 
-
-
 # 20250701
 给我准备面试题吧  要求题目和答案一起  生成在一个文档里面    范围是Java开发---ai开发  
 级别是高级Java开发到架构师级别   技术主要是精通java基础熟悉基本架构了解jvm优化  技术面是java/python基础
@@ -16,8 +14,8 @@ ai微调  提示词优化   消息中间件rocketmq  rabbitmq  kafka   高速搜
 
 
 
-
-
+# 20250701
+我看完了  有点太广泛了  先来20道java基础面试题吧
 
 
 

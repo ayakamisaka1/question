@@ -485,6 +485,206 @@ Python 适合模型调用、快速原型，Java 适合工程化与生产部署�
 > 本题库内容可根据候选人实际背景动态调整，适合技术总监 / 架构师 / 高级开发面试使用。
 
 
+# 20250701 题3---------------------------------------------------------------------------------------------------
+### Java 基础面试题（20 道，含答案）
+
+---
+
+**1. Java 中的基本数据类型有哪些？包装类型是什么？**
+
+**答案：**
+基本类型：byte、short、int、long、float、double、char、boolean，共 8 个。
+包装类型：Byte、Short、Integer、Long、Float、Double、Character、Boolean。
+
+---
+
+**2. == 和 equals() 有什么区别？**
+
+**答案：**
+
+* `==` 比较的是对象的地址（引用是否相同）
+* `equals()` 默认实现也是比较地址（Object），但很多类（如 String、Integer）重写了 equals()，改为比较内容
+
+---
+
+**3. String、StringBuilder 和 StringBuffer 有什么区别？**
+
+**答案：**
+
+* String 是不可变类，每次修改都会生成新对象
+* StringBuilder 是可变类，线程不安全，性能高
+* StringBuffer 是线程安全的，适用于并发场景
+
+---
+
+**4. Java 中的值传递和引用传递是什么？Java 是哪种？**
+
+**答案：**
+Java 是**值传递**，传递的是“值的副本”：
+
+* 对象传递的是引用的副本（即地址的副本），所以能修改对象内容
+* 基本类型传的是值的副本，修改不影响原值
+
+---
+
+**5. final 和 static 的区别？**
+
+**答案：**
+
+* final：修饰变量（不可变）、方法（不可重写）、类（不可继承）
+* static：属于类，不属于实例，可修饰变量、方法、代码块、内部类
+
+---
+
+**6. 抽象类和接口的区别？**
+
+**答案：**
+
+* 抽象类可以有构造方法、成员变量和非抽象方法
+* 接口只能定义方法签名（Java 8 之后支持默认方法和静态方法）
+* 一个类只能继承一个抽象类，但可实现多个接口
+
+---
+
+**7. Java 中异常的分类？区别？**
+
+**答案：**
+
+* CheckedException（编译时异常）：必须 try-catch，例如 IOException、SQLException
+* UncheckedException（运行时异常）：如 NullPointerException、IndexOutOfBoundsException
+
+---
+
+**8. try-with-resources 是什么？有什么好处？**
+
+**答案：**
+Java 7 引入的语法，自动调用资源的 close() 方法，避免资源泄漏。
+适用于实现了 AutoCloseable 接口的类。
+
+---
+
+**9. equals() 和 hashCode() 有什么关系？**
+
+**答案：**
+
+* 若两个对象 equals() 相等，hashCode() 必须相同
+* 若两个对象 hashCode() 相等，不一定 equals()
+* 在集合类如 HashMap 中依赖 hashCode() + equals() 判等
+
+---
+
+**10. 集合类 List、Set、Map 的区别？**
+
+**答案：**
+
+* List：有序、可重复，如 ArrayList、LinkedList
+* Set：无序、不可重复，如 HashSet、TreeSet
+* Map：键值对结构，key 不重复，如 HashMap、TreeMap
+
+---
+
+**11. ArrayList 和 LinkedList 区别？**
+
+**答案：**
+
+* ArrayList 底层是数组，查询快、增删慢
+* LinkedList 是链表结构，查询慢、增删快
+
+---
+
+**12. HashMap 和 ConcurrentHashMap 的区别？**
+
+**答案：**
+
+* HashMap 是线程不安全的
+* ConcurrentHashMap 是线程安全的，采用分段锁或 CAS 操作提高并发性能
+
+---
+
+**13. Java 中线程的创建方式有哪些？**
+
+**答案：**
+
+1. 继承 Thread 类
+2. 实现 Runnable 接口
+3. 使用 Callable + Future
+4. 使用线程池 ExecutorService
+
+---
+
+**14. synchronized 的作用是什么？可以作用在哪些位置？**
+
+**答案：**
+用于同步线程访问资源，可作用在：
+
+* 实例方法（锁对象）
+* 静态方法（锁类）
+* 代码块（锁任意对象）
+
+---
+
+**15. 什么是线程安全？如何保证？**
+
+**答案：**
+多个线程访问同一资源时，数据一致、结果正确。
+保证方式：
+
+* synchronized
+* Lock 显式锁
+* 原子类（AtomicInteger）
+* 线程安全容器（ConcurrentHashMap）
+
+---
+
+**16. volatile 是什么？能替代锁吗？**
+
+**答案：**
+volatile 保证变量对所有线程的可见性，不能保证原子性。
+不能完全替代锁，可配合 CAS 使用。
+
+**扩展：**
+CAS（Compare-And-Swap）是一种乐观锁机制，利用原子操作保证并发安全。
+
+---
+
+**17. 什么是反射？反射有哪些典型用途？**
+
+**答案：**
+反射可以在运行时动态获取类的信息、调用其方法或修改字段。
+典型用途：框架底层实现（如 Spring）、动态代理、插件机制。
+
+---
+
+**18. 泛型中的 ?、T、E、K、V 各代表什么？**
+
+**答案：**
+
+* T：Type（类型）
+* E：Element（元素）
+* K：Key（键）
+* V：Value（值）
+* ?: 通配符，表示未知类型
+
+---
+
+**19. 什么是枚举？枚举的优势？**
+
+**答案：**
+枚举是一种特殊的类，表示一组常量。
+优势：类型安全、可读性高、可定义方法和字段、可用于 switch。
+
+---
+
+**20. Java 8 中的 Lambda 表达式和 Stream 有哪些应用？**
+
+**答案：**
+
+* Lambda：简化匿名类，常用于函数式接口（Runnable、Comparator）
+* Stream：链式操作集合，支持 map、filter、reduce、collect 等函数式操作
+
+---
+
+如需继续扩展并发、JVM、设计模式、集合源码分析等方向，可继续追加。
 
 
 
