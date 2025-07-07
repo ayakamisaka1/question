@@ -1428,3 +1428,401 @@ CAP 指的是一致性（Consistency）、可用性（Availability）和分区�
 
 
 
+Spring AI 面试题（共 30 道）
+
+1. 什么是 Spring AI？它的核心作用是什么？
+
+答案：
+Spring AI 是 Spring 项目的一个子模块，提供与 AI 模型（如 OpenAI、HuggingFace、Ollama 等）集成的抽象接口。
+
+2. Spring AI 支持哪些主流模型服务商？
+
+答案：
+OpenAI, Azure OpenAI, HuggingFace, Ollama, Together.AI, Mistral, Vertex AI 等。
+
+3. Spring AI 中使用的主要组件有哪些？
+
+答案：
+PromptTemplate、ChatClient、EmbeddingClient、VectorStore、Retriever、DocumentReader。
+
+4. Spring AI 中如何集成 Chat Completion？
+
+答案：
+使用 ChatClient，通过 chatClient.call(messages) 方式发送提示消息。
+
+5. Spring AI 如何处理提示词模板？
+
+答案：
+使用 ${} 占位符注入变量，生成最终提示词文本。
+
+6. 如何通过 Spring AI 实现角色扮演 Prompt？
+
+答案：
+使用 SystemMessage、UserMessage、AssistantMessage 组合上下文。
+
+7. 什么是 PromptTemplate.fromTemplate()？
+
+答案：
+用于从模板字符串构建 PromptTemplate 对象。
+
+8. Spring AI 是如何支持 RAG 架构的？
+
+答案：
+Retriever + PromptTemplate + ChatClient 构建检索增强生成流程。
+
+9. 如何使用 Retriever？
+
+答案：
+vectorStore.asRetriever() → retrieve(query)。
+
+10. 如何配置 VectorStore 支持本地存储？
+
+答案：
+支持 Redis、Qdrant、PostgreSQL+pgvector、本地内存等。
+
+11. 向量与文档如何绑定？
+
+答案：
+向量保存 metadata，如 fileName、pageNumber，用于检索定位。
+
+12. 如何生成 Embedding？
+
+答案：
+使用 EmbeddingClient → embed(List)。
+
+13. 向量数据库作用？
+
+答案：
+用于语义检索，提升匹配准确率。
+
+14. 如何处理 PDF 文档向量化？
+
+答案：
+PdfDocumentReader → 切片 → Embedding → VectorStore。
+
+15. 如何控制向量片段大小和重叠？
+
+答案：
+配置 TextSplitter 中 chunkSize 和 overlap。
+
+16. Spring AI 如何接入 OpenAI？
+
+答案：
+配置 application.yml，设置 api-key 和模型参数。
+
+17. 是否支持函数调用？
+
+答案：
+支持。使用 @Function 注解或 FunctionCallbackWrapper 注册本地方法。
+
+18. 如何集成 LangChain？
+
+答案：
+Spring AI 可组合 LangChain Retriever、Prompt、Agent 工具。
+
+19. EmbeddingClient 支持哪些模型？
+
+答案：
+OpenAI、HuggingFace、Ollama。
+
+20. 如何构建文档问答系统？
+
+答案：
+文档 → Chunk → 向量 → 检索 → Prompt 注入 → 回答。
+
+21. 如何实现 Agent 机制？
+
+答案：
+通过 Tool Call + Function Binding 构建执行链。
+
+22. 知识库如何增量更新？
+
+答案：
+监听文件变更或手动重入库更新向量。
+
+23. 如何调试 Prompt 效果？
+
+答案：
+打印 PromptTemplate 和请求体，调试响应日志。
+
+24. 如何做 Prompt 优化？
+
+答案：
+Few-shot 提示、系统设定、输出格式约束等。
+
+25. LLM 响应超时如何处理？
+
+答案：
+设置 timeout，提供 fallback 兜底逻辑。
+
+26. 如何集成数据库问答？
+
+答案：
+Agent 工具接入 JDBC 查询，或转结构为文档向量。
+
+27. 如何构建企业级 RAG 系统？
+
+答案：
+文档 → Embedding → VectorDB → Prompt → LLM 回答。
+
+28. 如何与微服务集成？
+
+答案：
+作为独立 AI 服务提供 REST API。
+
+29. Spring AI 适合哪些场景？
+
+答案：
+智能问答、Copilot、文档搜索、客服系统。
+
+30. 如何实现链式对话流程？
+
+答案：
+组合多个工具函数和 Prompt 实现多轮推理。
+
+
+
+Spring AI vs LangChain 面试题对比（共 10 道）
+
+1. Spring AI 与 LangChain 在设计理念上有何不同？
+
+答案：
+
+Spring AI 更偏向于 Spring 项目的生态集成，采用声明式和组件式设计，强调与 Spring Boot 无缝对接。
+
+LangChain 更偏向于链式组合和 Agent 思维，适合构建复杂 LLM 应用流程。
+
+2. 哪个更适合构建企业级微服务中的 AI 模块？为什么？
+
+答案：
+
+Spring AI 更适合微服务集成，因其天然支持 Spring Cloud、配置、Bean 生命周期、注解驱动等。
+
+LangChain 更适合实验性或 AI-native 应用，如多 Agent 协作。
+
+3. 两者在 Prompt 构建和管理上有哪些不同？
+
+答案：
+
+Spring AI 使用 PromptTemplate（占位变量注入），支持 Spring 配置风格。
+
+LangChain 提供 PromptTemplate、FewShotPrompt 等，支持更多样式（如 few-shot 示例管理）。
+
+4. 哪个更适合进行多模型/多工具协同？
+
+答案：
+LangChain。它原生设计就包含 Agent、Tool、Chain 等机制，适合 orchestrator 构建。
+
+5. 向量检索方面，两者的能力差异？
+
+答案：
+
+Spring AI 支持 VectorStore（可适配 Redis、PGVector、Qdrant 等），偏简单。
+
+LangChain 支持 FAISS、Weaviate、Pinecone 等众多第三方，封装更深。
+
+6. 在使用 Java 构建项目时，哪个集成更优？
+
+答案：
+Spring AI 更优，因其提供 Java 原生支持。而 LangChain 是 Python 项目，Java 调用需额外对接。
+
+7. 两者是否都支持 Agent 调用工具函数？
+
+答案：
+是的：
+
+Spring AI 可通过 Function Callback 注册本地函数调用。
+
+LangChain 提供 Agent + Tool 标准，支持复杂推理。
+
+8. 哪个更适合用来构建 LLM 驱动的工作流系统？
+
+答案：
+LangChain。因其支持链式组合、条件跳转、回溯、嵌套等功能。
+
+9. 社区支持和生态对比如何？
+
+答案：
+
+LangChain 社区活跃，有大量第三方集成、库、模板。
+
+Spring AI 处于快速发展期，优势在于与 Spring 系统一致性。
+
+10. 如果构建一个带 PDF 文档搜索 + 多轮问答的系统，推荐哪种方式？
+
+答案：
+
+若你已有 Spring Boot 项目，Spring AI 更方便无缝集成。
+
+若你构建的是独立 AI 应用，LangChain 会更强大灵活。
+
+
+Spring 全家桶面试题（共 30 道）
+
+1. Spring 是什么？它解决了哪些问题？
+
+答案：
+Spring 是一个开源的轻量级 Java 企业级开发框架，主要解决企业级应用中的依赖注入（DI）和面向切面编程（AOP）问题。
+
+2. 什么是 IoC？Spring 如何实现 IoC？
+
+答案：
+IoC（控制反转）是指将对象的创建与依赖管理交给框架完成，Spring 通过 ApplicationContext 和 BeanFactory 实现。
+
+3. Spring 中 Bean 的生命周期有哪些阶段？
+
+答案：
+实例化 → 属性注入 → 初始化 → 使用 → 销毁。可通过 @PostConstruct、@PreDestroy 控制部分阶段。
+
+4. Bean 的作用域有哪些？
+
+答案：
+singleton（默认）、prototype、request、session、application、websocket。
+
+5. @Autowired 与 @Resource 区别？
+
+答案：
+@Autowired 是 Spring 提供的按类型注入，@Resource 是 JSR 提供的按名称注入。
+
+6. Spring 中如何实现 AOP？
+
+答案：
+基于 JDK 动态代理或 CGLIB，使用 @Aspect、@Before、@After、@Around 注解实现切面逻辑。
+
+7. 什么是事务传播行为？Spring 默认是哪种？
+
+答案：
+传播行为定义了一个事务方法被另一个事务方法调用时的行为。默认是 REQUIRED。
+
+8. Spring 的事务是如何实现的？
+
+答案：
+基于 AOP + 事务管理器（如 DataSourceTransactionManager），通过代理控制事务边界。
+
+9. 什么是事务的隔离级别？Spring 支持哪些？
+
+答案：
+共五级：DEFAULT、READ_UNCOMMITTED、READ_COMMITTED、REPEATABLE_READ、SERIALIZABLE。
+
+10. @Transactional 注解的使用注意事项？
+
+答案：
+
+只能作用在 public 方法上。
+
+同类内部方法调用不生效（代理无效）。
+
+异常未抛出不会回滚（需抛出 RuntimeException）。
+
+11. Spring Boot 与 Spring 的区别？
+
+答案：
+Spring Boot 是快速开发框架，简化 Spring 配置，内置 Tomcat，约定优于配置。
+
+12. Spring Boot 自动配置原理？
+
+答案：
+基于 @EnableAutoConfiguration 注解，读取 spring.factories 中定义的配置类。
+
+13. Spring Boot 如何实现条件装配？
+
+答案：
+使用 @ConditionalOnClass、@ConditionalOnMissingBean、@ConditionalOnProperty 等注解。
+
+14. Spring Boot 中如何配置多环境？
+
+答案：
+使用 application-{profile}.yml，并通过 spring.profiles.active 激活。
+
+15. Spring Boot 如何集成外部配置中心？
+
+答案：
+可集成 Nacos、Apollo，通过配置 bootstrap.yml / config-client 实现远程配置。
+
+16. Spring Cloud 是什么？
+
+答案：
+Spring Cloud 是一套基于 Spring Boot 的微服务治理工具集，提供注册中心、配置中心、网关、负载均衡等能力。
+
+17. Spring Cloud 常用组件有哪些？
+
+答案：
+Eureka、Nacos、Gateway、OpenFeign、Sleuth、Config、Stream、Bus、Hystrix、Sentinel 等。
+
+18. Spring Cloud Gateway 工作原理？
+
+答案：
+基于 WebFlux，使用 FilterChain 模式进行请求转发与处理，支持全局过滤器、局部过滤器。
+
+19. Spring 中如何实现事件发布监听？
+
+答案：
+使用 ApplicationEventPublisher 发布事件，@EventListener 注解监听处理。
+
+20. Spring 中有哪些常见设计模式？
+
+答案：
+工厂模式、代理模式、模板方法模式、单例模式、观察者模式、策略模式。
+
+21. Spring Security 如何实现登录认证？
+
+答案：
+使用 FilterChain 拦截请求，调用 AuthenticationManager 进行认证。
+
+22. Spring Security 如何实现权限控制？
+
+答案：
+基于注解（@PreAuthorize）、表达式、或 URL 权限控制。
+
+23. 如何实现 OAuth2 登录？
+
+答案：
+引入 spring-security-oauth2-client，配置 clientId、secret、重定向地址等。
+
+24. Spring 中 Bean 是线程安全的吗？
+
+答案：
+默认 singleton Bean 不是线程安全的，需要开发者自行控制并发。
+
+25. Spring 中如何定义和使用自定义注解？
+
+答案：
+使用 @Target、@Retention 等注解定义，并结合切面或反射解析。
+
+26. Spring 中 @Bean 与 @Component 区别？
+
+答案：
+@Bean 用于方法上显式注入；@Component 用于类上，配合注解扫描。
+
+27. Spring 中使用线程池有哪些方式？
+
+答案：
+使用 @Async + @EnableAsync 配合线程池 Bean（如 ThreadPoolTaskExecutor）。
+
+28. Spring Boot 如何监控应用运行状况？
+
+答案：
+引入 spring-boot-starter-actuator，访问 /actuator/health、/metrics 等端点。
+
+29. Spring Boot 如何处理全局异常？
+
+答案：
+使用 @ControllerAdvice + @ExceptionHandler 定义统一异常处理逻辑。
+
+30. Spring Boot 中如何实现接口限流？
+
+答案：
+可使用拦截器 + Redis + 注解实现；也可集成 Sentinel、Bucket4j 等限流组件。
+
+
+
+
+
+
+
+
+
+
+
+
+
